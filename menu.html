@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu — Urban Bubble</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --cream: #f5f0e8;
+        --taupe: #c4a882;
+        --espresso: #6b4f3a;
+        --deep: #1a1208;
+        --muted: #9e8b78;
+        --border: rgba(107, 79, 58, 0.12);
+        --mx: clamp(32px, 5vw, 80px);
+        --font: "Nunito Sans", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--cream);
+        color: var(--espresso);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ── NAV ── */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 300;
+        padding: 20px var(--mx);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 24px;
+        background: rgba(245, 240, 232, 0.94);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo img {
+        height: 15px;
+        display: block;
+        filter: brightness(0) sepia(1) saturate(3) hue-rotate(340deg)
+          brightness(0.4);
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+      }
+      .nav-links a {
+        color: var(--muted);
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--espresso);
+      }
+      .nav-links a.active {
+        color: var(--deep);
+        font-weight: 600;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .nav-order {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: var(--espresso);
+        border: 1px solid var(--border);
+        padding: 8px 18px;
+        border-radius: 100px;
+        transition:
+          background 0.25s,
+          color 0.25s,
+          border-color 0.25s;
+      }
+      .nav-order:hover {
+        background: var(--espresso);
+        color: var(--cream);
+        border-color: var(--espresso);
+      }
+
+      /* ── PAGE LAYOUT ── */
+      .page {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: 100vh;
+        padding-top: 65px;
+      }
+
+      /* ── LEFT FILTER ── */
+      .filter-col {
+        position: sticky;
+        top: 65px;
+        height: calc(100vh - 65px);
+        border-right: 1px solid var(--border);
+        padding: 48px var(--mx) 48px clamp(24px, 4vw, 60px);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+      .filter-title {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        margin-bottom: 28px;
+      }
+      .filter-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .filter-item {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: var(--muted);
+        cursor: pointer;
+        border-bottom: 1px solid transparent;
+        transition: color 0.25s;
+      }
+      .filter-item:hover {
+        color: var(--espresso);
+      }
+      .filter-item.active {
+        color: var(--deep);
+        border-bottom-color: var(--border);
+      }
+      .filter-count {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--taupe);
+        vertical-align: super;
+        font-size: 9px;
+      }
+
+      /* ── MAIN CONTENT ── */
+      .menu-main {
+        padding: 48px var(--mx) 80px 48px;
+      }
+
+      .menu-hero {
+        margin-bottom: 56px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid var(--border);
+      }
+      .menu-hero-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        margin-bottom: 16px;
+      }
+      .menu-hero-title {
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--deep);
+        line-height: 1;
+      }
+
+      /* ── CATEGORY GROUP ── */
+      .cat-group {
+        margin-bottom: 64px;
+      }
+      .cat-group[data-cat] {
+        display: block;
+      }
+      .cat-group.hidden {
+        display: none;
+      }
+
+      .cat-heading {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 28px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .cat-heading-name {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--espresso);
+      }
+      .cat-heading-count {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--taupe);
+      }
+
+      /* ── CARD GRID ── */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 2px;
+      }
+
+      /* ── FLIP CARD ── */
+      .flip-card {
+        aspect-ratio: 3/4;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+      .flip-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .flip-card:hover .flip-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-front,
+      .flip-back {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      /* Front: drink image floating on cream */
+      .flip-front {
+        background: #ede8e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .flip-front img {
+        width: 72%;
+        height: 72%;
+        object-fit: contain;
+        filter: drop-shadow(0 16px 32px rgba(26, 18, 8, 0.12));
+        transition: transform 0.4s ease;
+      }
+      .flip-card:hover .flip-front img {
+        transform: scale(1.04);
+      }
+
+      /* Back: name + flavor profile */
+      .flip-back {
+        background: var(--deep);
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 28px 24px;
+      }
+      .flip-back-cat {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        margin-bottom: 10px;
+      }
+      .flip-back-name {
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--cream);
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+      .flip-back-divider {
+        width: 24px;
+        height: 1px;
+        background: var(--taupe);
+        margin-bottom: 12px;
+      }
+      .flip-back-flavor {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.75;
+        color: rgba(245, 240, 232, 0.6);
+      }
+
+      /* ── FOOTER ── */
+      .footer {
+        background: var(--deep);
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+      }
+      .footer-brand {
+        padding: 56px var(--mx);
+        border-right: 1px solid rgba(245, 240, 232, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .footer-brand img {
+        height: 14px;
+        filter: brightness(0) invert(1);
+        opacity: 0.5;
+        display: block;
+      }
+      .footer-brand p {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.8;
+        color: rgba(245, 240, 232, 0.3);
+      }
+      .footer-cols {
+        padding: 56px var(--mx);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+      }
+      .footer-col h4 {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        margin-bottom: 20px;
+      }
+      .footer-col ul {
+        list-style: none;
+      }
+      .footer-col li {
+        margin-bottom: 10px;
+      }
+      .footer-col li a,
+      .footer-col li span {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(245, 240, 232, 0.35);
+        transition: color 0.25s;
+      }
+      .footer-col li a:hover {
+        color: rgba(245, 240, 232, 0.8);
+      }
+
+      /* FAQ accordion */
+      .faq-item {
+        border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+      }
+      .faq-item:first-child {
+        border-top: 1px solid rgba(245, 240, 232, 0.08);
+      }
+      .faq-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        gap: 12px;
+        font-family: var(--font);
+      }
+      .faq-trigger-label {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(245, 240, 232, 0.35);
+        text-align: left;
+        transition: color 0.25s;
+      }
+      .faq-trigger:hover .faq-trigger-label,
+      .faq-trigger.open .faq-trigger-label {
+        color: rgba(245, 240, 232, 0.8);
+      }
+      .faq-icon {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        position: relative;
+      }
+      .faq-icon::before,
+      .faq-icon::after {
+        content: "";
+        position: absolute;
+        background: rgba(245, 240, 232, 0.3);
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+      .faq-icon::before {
+        width: 100%;
+        height: 1px;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      .faq-icon::after {
+        width: 1px;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+      }
+      .faq-trigger.open .faq-icon::after {
+        transform: translateX(-50%) rotate(90deg);
+        opacity: 0;
+      }
+      .faq-body {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .faq-body.open {
+        max-height: 200px;
+      }
+      .faq-body-inner {
+        padding: 0 0 16px;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.8;
+        color: rgba(245, 240, 232, 0.25);
+      }
+
+      /* Canvas wordmark */
+      .footer-bottom {
+        overflow: hidden;
+      }
+      #footerVideo {
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #logoCanvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: -26%;
+        margin-bottom: -38%;
+      }
+      .footer-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 var(--mx) 16px;
+      }
+      .footer-meta span,
+      .footer-meta a {
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.04em;
+        color: rgba(245, 240, 232, 0.25);
+      }
+      .footer-meta a:hover {
+        color: var(--taupe);
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .page {
+          grid-template-columns: 1fr;
+        }
+        .filter-col {
+          position: static;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          padding: 24px var(--mx);
+          flex-direction: row;
+          align-items: center;
+          gap: 0;
+        }
+        .filter-title {
+          display: none;
+        }
+        .filter-list {
+          flex-direction: row;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .filter-item {
+          border-bottom: none;
+          padding: 6px 14px;
+          border-radius: 100px;
+          border: 1px solid var(--border);
+        }
+        .filter-item.active {
+          background: var(--espresso);
+          color: var(--cream);
+          border-color: var(--espresso);
+        }
+        .menu-main {
+          padding: 32px var(--mx) 60px;
+        }
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+        .footer-brand {
+          border-right: none;
+          border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+        }
+        .footer-cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+      <div class="nav-logo">
+        <a href="index.html"
+          ><img src="assets/ub_nav_logo.png" alt="Urban Bubble"
+        /></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Join the Team</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#order" class="nav-order">Order Online</a>
+      </div>
+    </nav>
+
+    <!-- PAGE -->
+    <div class="page">
+      <!-- LEFT FILTER -->
+      <aside class="filter-col">
+        <p class="filter-title">Filter</p>
+        <ul class="filter-list">
+          <li class="filter-item active" data-filter="all">
+            All<sup class="filter-count">12</sup>
+          </li>
+          <li class="filter-item" data-filter="brewed">
+            Brewed<sup class="filter-count">4</sup>
+          </li>
+          <li class="filter-item" data-filter="blended">
+            Blended<sup class="filter-count">5</sup>
+          </li>
+          <li class="filter-item" data-filter="specialties">
+            Specialties<sup class="filter-count">3</sup>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- MENU MAIN -->
+      <main class="menu-main">
+        <div class="menu-hero">
+          <p class="menu-hero-label">Urban Bubble — San Diego</p>
+          <h1 class="menu-hero-title">Our Menu.</h1>
+        </div>
+
+        <!-- BREWED -->
+        <div class="cat-group" data-cat="brewed">
+          <div class="cat-heading">
+            <span class="cat-heading-name">Brewed</span>
+            <span class="cat-heading-count">4 drinks</span>
+          </div>
+          <div class="card-grid">
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img
+                    src="assets/Gardenia Oolong Tea.png"
+                    alt="Gardenia Oolong Tea"
+                  />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Brewed</p>
+                  <p class="flip-back-name">Gardenia Oolong Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Delicate oolong steeped with fresh gardenia blossoms.
+                    Floral, clean, and softly fragrant with a lingering
+                    sweetness.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Camellia Tea.png" alt="Camellia Tea" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Brewed</p>
+                  <p class="flip-back-name">Camellia Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Single-origin camellia sinensis, cold-steeped for 12 hours.
+                    Clean, mineral, and deeply refreshing.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img
+                    src="assets/Iron Goddess Tea.png"
+                    alt="Iron Goddess Tea"
+                  />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Brewed</p>
+                  <p class="flip-back-name">Iron Goddess Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Classic Tieguanyin oolong, roasted and full-bodied. Warm,
+                    toasty notes with a clean honey finish.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Osmanthus Tea.png" alt="Osmanthus Tea" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Brewed</p>
+                  <p class="flip-back-name">Osmanthus Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Green tea bloomed with dried osmanthus flowers. Subtly
+                    sweet, apricot-like aroma with a gentle, golden finish.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLENDED -->
+        <div class="cat-group" data-cat="blended">
+          <div class="cat-heading">
+            <span class="cat-heading-name">Blended</span>
+            <span class="cat-heading-count">5 drinks</span>
+          </div>
+          <div class="card-grid">
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Taro.png" alt="Taro" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Blended</p>
+                  <p class="flip-back-name">Taro</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    House-made taro blended with oat milk and brown sugar
+                    pearls. Earthy, creamy, and gently sweet.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Mango.png" alt="Mango Sago" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Blended</p>
+                  <p class="flip-back-name">Mango Sago</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Alphonso mango purée, coconut cream, and chewy sago pearls.
+                    Tropical, rich, and indulgent.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Strawberry.png" alt="Strawberry" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Blended</p>
+                  <p class="flip-back-name">Strawberry Milk</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Fresh strawberry blended with milk and a hint of vanilla.
+                    Bright, fruity, and beautifully pink.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Chocolate.png" alt="Chocolate" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Blended</p>
+                  <p class="flip-back-name">Chocolate Boba</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Dark cocoa blended with fresh milk and black tapioca pearls.
+                    Rich, smooth, and deeply satisfying.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Grape Bubble.png" alt="Grape Bubble" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Blended</p>
+                  <p class="flip-back-name">Grape Burst</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Kyoho grape over white tea with popping pearls that burst on
+                    the palate. Sweet, juicy, and playful.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECIALTIES -->
+        <div class="cat-group" data-cat="specialties">
+          <div class="cat-heading">
+            <span class="cat-heading-name">Specialties</span>
+            <span class="cat-heading-count">3 drinks</span>
+          </div>
+          <div class="card-grid">
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img
+                    src="assets/Creme Brulee.png"
+                    alt="Creme Brulee Milk Tea"
+                  />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Specialties</p>
+                  <p class="flip-back-name">Crème Brûlée Milk Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Assam tea base with a torched caramelised sugar crust and
+                    fresh milk. Decadent, warm, and unforgettable.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img
+                    src="assets/Tea with whip creme.png"
+                    alt="Tea with Whip Cream"
+                  />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Specialties</p>
+                  <p class="flip-back-name">Sea Salt Foam Tea</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Oolong base topped with lightly salted cheese foam. The
+                    contrast of sweet and savoury makes every sip complex.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="assets/Tea.png" alt="Signature Tea" />
+                </div>
+                <div class="flip-back">
+                  <p class="flip-back-cat">Specialties</p>
+                  <p class="flip-back-name">Urban Signature</p>
+                  <div class="flip-back-divider"></div>
+                  <p class="flip-back-flavor">
+                    Our house blend — a rotating seasonal creation from our
+                    team. Ask your server what's featured today.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/ub_nav_logo.png" alt="Urban Bubble" />
+          <p>Premium tea & boba,<br />crafted daily in San Diego.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Location</h4>
+            <ul>
+              <li><span>8055 Clairemont Mesa Blvd</span></li>
+              <li><span>#100, San Diego CA 92111</span></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Hours</h4>
+            <ul>
+              <li><span>Monday to Sunday</span></li>
+              <li><span>Sun–Thurs: 11am – 11pm</span></li>
+              <li><span>Fri–Sat: 11am – 12am</span></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="mailto:info@urbanbubblesd.com"
+                  >info@urbanbubblesd.com</a
+                >
+              </li>
+              <li><a href="tel:18885690660">1.888.569.0660</a></li>
+              <li>
+                <a
+                  href="https://instagram.com/urbanbubblesd"
+                  target="_blank"
+                  rel="noopener"
+                  >Instagram</a
+                >
+              </li>
+              <li><a href="careers.html">Join the Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>FAQ</h4>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Locations & Growth</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Urban Bubble was founded in San Diego, CA. We're currently
+                  focused on refining our concept and elevating the experience
+                  at our existing location. We are not franchising at this time.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Drinks & Ingredients</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Our drinks are crafted with freshly brewed tea, high-quality
+                  ingredients, and natural flavors. All milk teas are
+                  lactose-free using non-dairy creamer. Oat milk available upon
+                  request.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">About Urban Bubble</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Urban Bubble delivers a fresh, elevated take on bubble tea.
+                  From premium ingredients to unique flavors, every drink is
+                  designed to offer something new while staying rooted in
+                  quality.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Catering & Services</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Yes, we offer catering. For full details and options, please
+                  visit the catering menu on our website.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <video id="footerVideo" autoplay muted loop playsinline>
+          <source src="assets/hero_video.mp4" type="video/mp4" />
+        </video>
+        <canvas id="logoCanvas"></canvas>
+      </div>
+
+      <div class="footer-meta">
+        <span>Urban Bubble &copy; 2026.</span>
+        <a href="https://khoiqnguyen.com" target="_blank" rel="noopener"
+          >Designed by Khoi Nguyen</a
+        >
+      </div>
+    </footer>
+
+    <script>
+      /* Filter */
+      document.querySelectorAll(".filter-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-item")
+            .forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
+          const filter = item.dataset.filter;
+          document.querySelectorAll(".cat-group").forEach((group) => {
+            if (filter === "all" || group.dataset.cat === filter) {
+              group.classList.remove("hidden");
+            } else {
+              group.classList.add("hidden");
+            }
+          });
+        });
+      });
+
+      /* FAQ accordion */
+      document.querySelectorAll(".faq-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const body = trigger.nextElementSibling;
+          const isOpen = trigger.classList.contains("open");
+          document.querySelectorAll(".faq-trigger").forEach((t) => {
+            t.classList.remove("open");
+            t.nextElementSibling.classList.remove("open");
+          });
+          if (!isOpen) {
+            trigger.classList.add("open");
+            body.classList.add("open");
+          }
+        });
+      });
+
+      /* Footer canvas */
+      (function () {
+        const canvas = document.getElementById("logoCanvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("footerVideo");
+        const logo = new Image();
+        logo.src = "assets/urban_bubble_text_logo.png";
+        let ready = false;
+
+        function draw() {
+          requestAnimationFrame(draw);
+          if (!ready || video.readyState < 2) return;
+          const W = canvas.width,
+            H = canvas.height;
+          ctx.clearRect(0, 0, W, H);
+          const vAR = video.videoWidth / video.videoHeight;
+          const cAR = W / H;
+          let sx, sy, sw, sh;
+          if (vAR > cAR) {
+            sh = video.videoHeight;
+            sw = sh * cAR;
+            sx = (video.videoWidth - sw) / 2;
+            sy = 0;
+          } else {
+            sw = video.videoWidth;
+            sh = sw / cAR;
+            sx = 0;
+            sy = (video.videoHeight - sh) / 2;
+          }
+          ctx.drawImage(video, sx, sy, sw, sh, 0, 0, W, H);
+          ctx.globalCompositeOperation = "destination-in";
+          ctx.drawImage(logo, 0, 0, W, H);
+          ctx.globalCompositeOperation = "source-over";
+        }
+
+        logo.onload = () => {
+          canvas.width = logo.naturalWidth;
+          canvas.height = logo.naturalHeight;
+          ready = true;
+          requestAnimationFrame(draw);
+        };
+        if (logo.complete && logo.naturalWidth) {
+          canvas.width = logo.naturalWidth;
+          canvas.height = logo.naturalHeight;
+          ready = true;
+          requestAnimationFrame(draw);
+        }
+        video.play().catch(() => {});
+      })();
+    </script>
+  </body>
+</html>
