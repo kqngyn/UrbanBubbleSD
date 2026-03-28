@@ -1,1 +1,1545 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urban Bubble — San Diego</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      :root {
+        --cream: #f5f0e8;
+        --taupe: #c4a882;
+        --espresso: #6b4f3a;
+        --deep: #1a1208;
+        --muted: #9e8b78;
+        --border: rgba(107, 79, 58, 0.12);
+        --mx: clamp(32px, 5vw, 80px);
+        --font: "Nunito Sans", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--cream);
+        color: var(--espresso);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 300;
+        padding: 20px var(--mx);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 24px;
+      }
+      .nav::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: var(--mx);
+        right: var(--mx);
+        height: 1px;
+        background: var(--border);
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .nav.scrolled::after {
+        opacity: 1;
+      }
+      .nav.scrolled {
+        background: rgba(245, 240, 232, 0.94);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav-logo img {
+        height: 15px;
+        display: block;
+        transition: filter 0.4s;
+      }
+      .nav-logo img {
+        filter: brightness(0) invert(1);
+        transition: filter 0.4s ease;
+      }
+      .nav.scrolled .nav-logo img {
+        filter: brightness(0) sepia(1) saturate(3) hue-rotate(340deg)
+          brightness(0.4);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+      }
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.75);
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: white;
+      }
+      .nav.scrolled .nav-links a {
+        color: var(--muted);
+      }
+      .nav.scrolled .nav-links a:hover {
+        color: var(--espresso);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: flex-end;
+      }
+      .nav-order {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 8px 18px;
+        border-radius: 100px;
+        transition:
+          background 0.25s,
+          color 0.25s,
+          border-color 0.25s;
+      }
+      .nav-order:hover {
+        background: white;
+        color: var(--deep);
+        border-color: white;
+      }
+      .nav.scrolled .nav-order {
+        color: var(--espresso);
+        border-color: var(--border);
+      }
+      .nav.scrolled .nav-order:hover {
+        background: var(--espresso);
+        color: var(--cream);
+        border-color: var(--espresso);
+      }
+
+      /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(26, 18, 8, 0.72) 0%,
+          rgba(26, 18, 8, 0.15) 55%,
+          transparent 100%
+        );
+      }
+      .hero-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0 var(--mx) 52px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        z-index: 2;
+      }
+      .hero-wordmark {
+        animation: fadeUp 1.2s ease 0.3s both;
+      }
+      .hero-wordmark img {
+        display: block;
+        width: clamp(260px, 48vw, 700px);
+        filter: brightness(0) invert(1);
+      }
+      .hero-meta {
+        text-align: right;
+        animation: fadeUp 1.2s ease 0.6s both;
+      }
+      .hero-meta p {
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(245, 240, 232, 0.55);
+        line-height: 2;
+      }
+
+      /* ─────────────────────────────────────────
+       SECTION UTILITY
+    ───────────────────────────────────────── */
+      .sec-rule {
+        height: 1px;
+        background: var(--border);
+        margin: 0 var(--mx);
+      }
+      .sec-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--taupe);
+      }
+
+      /* ─────────────────────────────────────────
+       MENU  (three-column floating image)
+    ───────────────────────────────────────── */
+      .menu-outer {
+        position: relative;
+        height: 300vh;
+      }
+      .menu-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 220px 1fr 280px;
+        border-bottom: 1px solid var(--border);
+        background: var(--cream);
+        overflow: hidden;
+      }
+
+      /* Left: label + category nav */
+      .menu-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px var(--mx);
+        border-right: 1px solid var(--border);
+      }
+      .menu-left .sec-label {
+        margin-bottom: 32px;
+        display: block;
+      }
+      .menu-cats {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .menu-cat {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--muted);
+        padding: 8px 0;
+        border-bottom: 1px solid transparent;
+        transition: color 0.3s;
+        cursor: default;
+      }
+      .menu-cat.active {
+        color: var(--deep);
+      }
+      .menu-cat-num {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--taupe);
+        margin-left: 4px;
+        vertical-align: super;
+        font-size: 8px;
+      }
+      .menu-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--espresso);
+        border-bottom: 1px solid var(--taupe);
+        padding-bottom: 3px;
+        width: fit-content;
+        margin-top: 40px;
+        transition:
+          color 0.25s,
+          border-color 0.25s;
+      }
+      .menu-cta:hover {
+        color: var(--deep);
+        border-color: var(--deep);
+      }
+      .menu-cta svg {
+        transition: transform 0.25s;
+      }
+      .menu-cta:hover svg {
+        transform: translateX(4px);
+      }
+
+      /* Center: floating drink image */
+      .menu-center {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .menu-img-wrap {
+        position: relative;
+        width: 72%;
+        max-width: 420px;
+        aspect-ratio: 1;
+      }
+      .menu-img {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+      }
+      .menu-img.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .menu-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 40px 60px rgba(26, 18, 8, 0.18))
+          drop-shadow(0 8px 16px rgba(26, 18, 8, 0.1));
+        animation: floatDrink 5s ease-in-out infinite;
+      }
+      @keyframes floatDrink {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      /* Each image gets staggered float timing */
+      .menu-img:nth-child(2) img {
+        animation-delay: -1.6s;
+      }
+      .menu-img:nth-child(3) img {
+        animation-delay: -3.2s;
+      }
+
+      /* Right: sticky drink info */
+      .menu-right {
+        border-left: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+      }
+      .menu-info {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 40px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+        pointer-events: none;
+      }
+      .menu-info.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .menu-info-num {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--taupe);
+        margin-bottom: 16px;
+      }
+      .menu-info-name {
+        font-size: clamp(22px, 2.4vw, 32px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--deep);
+        line-height: 1.1;
+        margin-bottom: 16px;
+      }
+      .menu-info-desc {
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 1.85;
+        color: var(--muted);
+        max-width: 220px;
+      }
+
+      /* ─────────────────────────────────────────
+       MARQUEE
+    ───────────────────────────────────────── */
+      .marquee-wrap {
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+        padding: 18px 0;
+      }
+      .marquee-track {
+        display: flex;
+        white-space: nowrap;
+        animation: marquee 20s linear infinite;
+      }
+      .marquee-track span {
+        font-size: clamp(36px, 6vw, 72px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        padding: 0 32px;
+        color: var(--espresso);
+        opacity: 0.07;
+      }
+      .marquee-track span.hi {
+        opacity: 0.45;
+        color: var(--taupe);
+      }
+
+      /* ─────────────────────────────────────────
+       STORY
+    ───────────────────────────────────────── */
+      .story {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .story-label {
+        padding: 72px var(--mx) 72px var(--mx);
+        border-right: 1px solid var(--border);
+      }
+      .story-label .sec-label {
+        display: block;
+      }
+      .story-body {
+        padding: 72px 80px 72px var(--mx);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      .story-headline {
+        font-size: clamp(28px, 3.2vw, 44px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        color: var(--deep);
+        margin-bottom: 28px;
+      }
+      .story-copy {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.9;
+        color: var(--muted);
+      }
+      .story-copy p + p {
+        margin-top: 18px;
+      }
+      .story-copy strong {
+        font-weight: 600;
+        color: var(--espresso);
+      }
+      .story-img {
+        position: relative;
+      }
+      .story-img-wrap {
+        width: 100%;
+        aspect-ratio: 4/5;
+        overflow: hidden;
+        background: #ede8e0;
+      }
+      .story-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+        display: block;
+      }
+      .story-img-wrap:hover img {
+        transform: scale(1.04);
+      }
+      .story-stat {
+        position: absolute;
+        bottom: -20px;
+        left: -20px;
+        background: var(--taupe);
+        padding: 20px 24px;
+      }
+      .story-stat-num {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--deep);
+        line-height: 1;
+      }
+      .story-stat-sub {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--espresso);
+        margin-top: 4px;
+      }
+
+      /* ─────────────────────────────────────────
+       INGREDIENTS  (Slurp-style grid rows)
+    ───────────────────────────────────────── */
+      .ingredients {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        border-bottom: 1px solid var(--border);
+      }
+      .ingredients-label {
+        padding: 72px var(--mx);
+        border-right: 1px solid var(--border);
+      }
+      .ingredients-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .ing-item {
+        padding: 48px var(--mx) 48px 60px;
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        transition: background 0.3s;
+      }
+      .ing-item:nth-child(even) {
+        border-right: none;
+      }
+      .ing-item:nth-last-child(-n + 2) {
+        border-bottom: none;
+      }
+      .ing-item:hover {
+        background: rgba(196, 168, 130, 0.07);
+      }
+      .ing-num {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--taupe);
+        margin-bottom: 20px;
+      }
+      .ing-title {
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: var(--deep);
+        margin-bottom: 12px;
+      }
+      .ing-body {
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 1.85;
+        color: var(--muted);
+      }
+
+      /* ─────────────────────────────────────────
+       LOCATION
+    ───────────────────────────────────────── */
+      .location {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        border-bottom: 1px solid var(--border);
+      }
+      .location-label {
+        padding: 72px var(--mx);
+        border-right: 1px solid var(--border);
+      }
+      .location-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .location-info {
+        padding: 72px 60px 72px var(--mx);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .location-name {
+        font-size: clamp(28px, 3vw, 40px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        color: var(--deep);
+        margin-bottom: 36px;
+      }
+      .location-rows {
+        flex: 1;
+      }
+      .location-row {
+        padding: 16px 0;
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 88px 1fr;
+        gap: 20px;
+      }
+      .location-row:last-child {
+        border-bottom: 1px solid var(--border);
+      }
+      .location-row-key {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        padding-top: 2px;
+      }
+      .location-row-val {
+        font-size: 13px;
+        font-weight: 300;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .location-cta {
+        margin-top: 36px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--espresso);
+        border-bottom: 1px solid var(--taupe);
+        padding-bottom: 3px;
+        width: fit-content;
+        transition:
+          color 0.25s,
+          border-color 0.25s;
+      }
+      .location-cta:hover {
+        color: var(--deep);
+        border-color: var(--deep);
+      }
+      .location-video {
+        overflow: hidden;
+      }
+      .location-video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        min-height: 400px;
+      }
+
+      /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+      .footer {
+        background: var(--deep);
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+      }
+      .footer-brand {
+        padding: 56px var(--mx);
+        border-right: 1px solid rgba(245, 240, 232, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .footer-brand img {
+        height: 14px;
+        filter: brightness(0) invert(1);
+        opacity: 0.5;
+        display: block;
+      }
+      .footer-brand p {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.8;
+        color: rgba(245, 240, 232, 0.3);
+      }
+      .footer-cols {
+        padding: 56px var(--mx);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+      }
+      .footer-col h4 {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--taupe);
+        margin-bottom: 20px;
+      }
+      .footer-col ul {
+        list-style: none;
+      }
+      .footer-col li {
+        margin-bottom: 10px;
+      }
+      .footer-col li a,
+      .footer-col li span {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(245, 240, 232, 0.35);
+        transition: color 0.25s;
+      }
+      .footer-col li a:hover {
+        color: rgba(245, 240, 232, 0.8);
+      }
+
+      /* FAQ accordion */
+      .faq-item {
+        border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+      }
+      .faq-item:first-child {
+        border-top: 1px solid rgba(245, 240, 232, 0.08);
+      }
+      .faq-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        gap: 12px;
+        font-family: var(--font);
+      }
+      .faq-trigger-label {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(245, 240, 232, 0.35);
+        text-align: left;
+        transition: color 0.25s;
+      }
+      .faq-trigger:hover .faq-trigger-label {
+        color: rgba(245, 240, 232, 0.8);
+      }
+      .faq-trigger.open .faq-trigger-label {
+        color: rgba(245, 240, 232, 0.8);
+      }
+      .faq-icon {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        position: relative;
+      }
+      .faq-icon::before,
+      .faq-icon::after {
+        content: "";
+        position: absolute;
+        background: rgba(245, 240, 232, 0.3);
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+      .faq-icon::before {
+        width: 100%;
+        height: 1px;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      .faq-icon::after {
+        width: 1px;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+      }
+      .faq-trigger.open .faq-icon::after {
+        transform: translateX(-50%) rotate(90deg);
+        opacity: 0;
+      }
+      .faq-body {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .faq-body.open {
+        max-height: 200px;
+      }
+      .faq-body-inner {
+        padding: 0 0 16px;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.8;
+        color: rgba(245, 240, 232, 0.25);
+      }
+
+      /* Canvas wordmark */
+      .footer-bottom {
+        overflow: hidden;
+      }
+      #footerVideo {
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #logoCanvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: -26%;
+        margin-bottom: -38%;
+      }
+      .footer-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 var(--mx) 16px;
+      }
+      .footer-meta span,
+      .footer-meta a {
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.04em;
+        color: rgba(245, 240, 232, 0.25);
+      }
+      .footer-meta a:hover {
+        color: var(--taupe);
+      }
+
+      /* ─────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal-d1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-d2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-d3 {
+        transition-delay: 0.3s;
+      }
+
+      /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+      @media (max-width: 960px) {
+        .intro {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .story {
+          grid-template-columns: 1fr;
+        }
+        .story-label {
+          padding: 40px var(--mx) 0;
+          border-right: none;
+        }
+        .story-body {
+          grid-template-columns: 1fr;
+          padding: 32px var(--mx) 60px;
+        }
+        .story-stat {
+          position: static;
+          margin-top: 16px;
+          display: inline-block;
+        }
+        .ingredients {
+          grid-template-columns: 1fr;
+        }
+        .ingredients-label {
+          padding: 40px var(--mx) 0;
+          border-right: none;
+        }
+        .ingredients-grid {
+          grid-template-columns: 1fr;
+        }
+        .ing-item {
+          border-right: none !important;
+          padding: 36px var(--mx);
+        }
+        .location {
+          grid-template-columns: 1fr;
+        }
+        .location-label {
+          padding: 40px var(--mx) 0;
+          border-right: none;
+          border-bottom: none;
+        }
+        .location-body {
+          grid-template-columns: 1fr;
+        }
+        .location-info {
+          padding: 32px var(--mx) 40px;
+          border-right: none;
+        }
+        .menu-sticky {
+          grid-template-columns: 1fr;
+        }
+        .menu-left {
+          display: none;
+        }
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+        .footer-brand {
+          border-right: none;
+          border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+        }
+        .footer-cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        :root {
+          --mx: 24px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .footer-cols {
+          grid-template-columns: 1fr;
+        }
+        .story-body {
+          gap: 32px;
+        }
+      }
+
+      /* ─────────────────────────────────────────
+       LOADER
+    ───────────────────────────────────────── */
+      body.loading {
+        overflow: hidden;
+      }
+
+      .loader {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: var(--deep);
+        pointer-events: none;
+      }
+      .loader.p3 {
+        animation: lPanelUp 1s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+      }
+      @keyframes lPanelUp {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-100%);
+        }
+      }
+
+      /* Nav hidden until loader done */
+      .nav {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .nav.vis {
+        opacity: 1;
+      }
+      .hero {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="loading">
+    <!-- LOADER: dark panel only -->
+    <div class="loader" id="loader"></div>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+      <div class="nav-logo">
+        <a href="/"><img src="assets/ub_nav_logo.png" alt="Urban Bubble" /></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Join the Team</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#order" class="nav-order">Order Online</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/hero_video.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <div class="hero-meta">
+          <p>Premium Tea & Boba</p>
+          <p>San Diego, CA</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu">
+      <div class="menu-outer" id="menuOuter">
+        <div class="menu-sticky">
+          <!-- Left: category nav -->
+          <div class="menu-left">
+            <span class="sec-label">Our Menu</span>
+            <div class="menu-cats">
+              <div class="menu-cat active" data-i="0">
+                Brewed<sup class="menu-cat-num">01</sup>
+              </div>
+              <div class="menu-cat" data-i="1">
+                Blended<sup class="menu-cat-num">02</sup>
+              </div>
+              <div class="menu-cat" data-i="2">
+                Specialty<sup class="menu-cat-num">03</sup>
+              </div>
+            </div>
+            <a href="menu.html" class="menu-cta">
+              Explore full menu
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M2 7h10M8 3l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Center: floating drink images -->
+          <div class="menu-center">
+            <div class="menu-img-wrap">
+              <div class="menu-img active" data-i="0">
+                <img
+                  src="assets/Gardenia Oolong Tea.png"
+                  alt="Gardenia Oolong Tea"
+                />
+              </div>
+              <div class="menu-img" data-i="1">
+                <img src="assets/Mango.png" alt="Mango Blended" />
+              </div>
+              <div class="menu-img" data-i="2">
+                <img
+                  src="assets/Creme Brulee.png"
+                  alt="Creme Brulee Specialty"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: sticky drink info -->
+          <div class="menu-right">
+            <div class="menu-info active" data-i="0">
+              <p class="menu-info-num">01 — Brewed</p>
+              <h3 class="menu-info-name">Gardenia Oolong Tea</h3>
+              <p class="menu-info-desc">
+                Delicate oolong steeped with fresh gardenia blossoms. Floral,
+                clean, and light.
+              </p>
+            </div>
+            <div class="menu-info" data-i="1">
+              <p class="menu-info-num">02 — Blended</p>
+              <h3 class="menu-info-name">Mango Sago</h3>
+              <p class="menu-info-desc">
+                Alphonso mango, coconut cream, and sago pearls. Rich, tropical,
+                and indulgent.
+              </p>
+            </div>
+            <div class="menu-info" data-i="2">
+              <p class="menu-info-num">03 — Specialty</p>
+              <h3 class="menu-info-name">Crème Brûlée Milk Tea</h3>
+              <p class="menu-info-desc">
+                Assam tea, caramelised sugar crust, fresh milk. Our most
+                requested drink.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="story" id="story">
+      <div class="story-label">
+        <span class="sec-label">About</span>
+      </div>
+      <div class="story-body">
+        <div class="story-text reveal">
+          <h2 class="story-headline">Small shop.</h2>
+          <div class="story-copy">
+            <p>
+              Urban Bubble was born in San Diego with one conviction: boba could
+              be more than a trend. More than sweetness and aesthetics.
+            </p>
+            <p>
+              We source our teas directly from growers, steep them at the right
+              temperature, and build every drink from ingredients that actually
+              mean something.
+            </p>
+            <p>
+              <strong>Real taro. Real matcha. Real milk.</strong> No artificial
+              flavors. No shortcuts. Just tea made the way it deserves to be.
+            </p>
+          </div>
+          <a href="about.html" class="menu-cta" style="margin-top: 32px">
+            Our full story
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 7h10M8 3l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+        <div class="story-img reveal reveal-d2">
+          <div class="story-img-wrap">
+            <img src="assets/Camellia Tea.png" alt="Tea preparation" />
+          </div>
+          <div class="story-stat">
+            <div class="story-stat-num">2018</div>
+            <div class="story-stat-sub">Founded in San Diego</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INGREDIENTS -->
+    <section class="ingredients">
+      <div class="ingredients-label">
+        <span class="sec-label">What goes in</span>
+      </div>
+      <div class="ingredients-grid">
+        <div class="ing-item reveal">
+          <p class="ing-num">01</p>
+          <p class="ing-title">Real Leaf Tea</p>
+          <p class="ing-body">
+            Sourced directly from single-origin gardens in Taiwan, Japan, and
+            Sri Lanka. Steeped fresh, never powdered.
+          </p>
+        </div>
+        <div class="ing-item reveal reveal-d1">
+          <p class="ing-num">02</p>
+          <p class="ing-title">No Artificial Flavors</p>
+          <p class="ing-body">
+            Every flavor comes from the ingredient itself. Our taro is real
+            taro. Our matcha is ceremonial grade.
+          </p>
+        </div>
+        <div class="ing-item reveal reveal-d2">
+          <p class="ing-num">03</p>
+          <p class="ing-title">Adjustable Sweetness</p>
+          <p class="ing-body">
+            Every drink is made to your level. From 0% to 100%, you are in
+            control of what goes into your cup.
+          </p>
+        </div>
+        <div class="ing-item reveal reveal-d3">
+          <p class="ing-num">04</p>
+          <p class="ing-title">Made Fresh Daily</p>
+          <p class="ing-body">
+            Our pearls are cooked every morning. Our bases are brewed in-house.
+            Nothing sits overnight.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="location" id="location">
+      <div class="location-label">
+        <span class="sec-label">Find Us</span>
+      </div>
+      <div class="location-body">
+        <div class="location-info reveal">
+          <div>
+            <h2 class="location-name">Come in.</h2>
+            <div class="location-rows">
+              <div class="location-row">
+                <span class="location-row-key">Address</span>
+                <span class="location-row-val"
+                  >8055 Clairemont Mesa Blvd<br />#100, San Diego CA 92111</span
+                >
+              </div>
+              <div class="location-row">
+                <span class="location-row-key">Hours</span>
+                <span class="location-row-val"
+                  >Sun – Thurs: 11am – 11pm<br />Fri – Sat: 11am – 12am</span
+                >
+              </div>
+              <div class="location-row">
+                <span class="location-row-key">Phone</span>
+                <span class="location-row-val">1.88.569.0660</span>
+              </div>
+              <div class="location-row">
+                <span class="location-row-key">Email</span>
+                <span class="location-row-val"
+                  ><a href="mailto:info@urbanbubblesd.com"
+                    >info@urbanbubblesd.com</a
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+          <a
+            href="https://maps.app.goo.gl/4BHQ8NjLyQ7pwSCv7"
+            target="_blank"
+            class="location-cta"
+          >
+            Get directions
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 7h10M8 3l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+        <div class="location-video">
+          <video autoplay muted loop playsinline>
+            <source src="assets/hero_video.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/ub_nav_logo.png" alt="Urban Bubble" />
+          <p>Premium tea & boba,<br />crafted daily in San Diego.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Location</h4>
+            <ul>
+              <li><span>8055 Clairemont Mesa Blvd</span></li>
+              <li><span>#100, San Diego CA 92111</span></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Hours</h4>
+            <ul>
+              <li><span>Monday to Sunday</span></li>
+              <li><span>Sun–Thurs: 11am – 11pm</span></li>
+              <li><span>Fri–Sat: 11am – 12am</span></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="mailto:info@urbanbubblesd.com"
+                  >info@urbanbubblesd.com</a
+                >
+              </li>
+              <li><a href="tel:18885690660">1.88.569.0660</a></li>
+              <li>
+                <a href="https://instagram.com/urbanbubblesd" target="_blank"
+                  >Instagram</a
+                >
+              </li>
+              <li><a href="#join">Join the Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>FAQ</h4>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Locations & Growth</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Urban Bubble was founded in San Diego, CA. We're currently
+                  focused on refining our concept and elevating the experience
+                  at our existing location. While we're always exploring
+                  opportunities to grow, we are not franchising at this time.
+                  Stay tuned for future expansion updates.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Drinks & Ingredients</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Our drinks are crafted with freshly brewed tea, high-quality
+                  ingredients, and natural flavors for an authentic boba
+                  experience. All milk teas are lactose-free using non-dairy
+                  creamer. Our lattes are made with whole milk, with options
+                  like oat milk available upon request. We use liquid cane
+                  sugar, and sweetness levels can be customized to your
+                  preference.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">About Urban Bubble</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Urban Bubble delivers a fresh, elevated take on bubble tea.
+                  From premium ingredients to unique and innovative flavors,
+                  every drink is designed to offer something new while staying
+                  rooted in quality and authenticity.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span class="faq-trigger-label">Catering & Services</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-body">
+                <p class="faq-body-inner">
+                  Yes, we offer catering. For full details and options, please
+                  visit the catering menu on our website.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <video id="footerVideo" autoplay muted loop playsinline>
+          <source src="assets/hero_video.mp4" type="video/mp4" />
+        </video>
+        <canvas id="logoCanvas"></canvas>
+      </div>
+
+      <div class="footer-meta">
+        <span>Urban Bubble &copy; 2026.</span>
+        <a href="https://khoiqnguyen.com" target="_blank"
+          >Designed by Khoi Nguyen</a
+        >
+      </div>
+    </footer>
+
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script>
+      /* ── Loader sequence ── */
+      (function () {
+        const loader = document.getElementById("loader");
+        const nav = document.getElementById("nav");
+
+        setTimeout(() => {
+          loader.classList.add("p3");
+        }, 800);
+
+        setTimeout(() => {
+          loader.style.display = "none";
+          nav.classList.add("vis");
+          document.body.classList.remove("loading");
+        }, 1900);
+      })();
+      const nav = document.getElementById("nav");
+      window.addEventListener(
+        "scroll",
+        () => {
+          nav.classList.toggle("scrolled", window.scrollY > 60);
+        },
+        { passive: true },
+      );
+
+      /* Reveal on scroll */
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      /* Menu — three column floating image */
+      (function () {
+        const outer = document.getElementById("menuOuter");
+        const cats = document.querySelectorAll(".menu-cat");
+        const imgs = document.querySelectorAll(".menu-img");
+        const infos = document.querySelectorAll(".menu-info");
+        const n = imgs.length;
+
+        function setActive(i) {
+          cats.forEach((c, j) => c.classList.toggle("active", j === i));
+          imgs.forEach((c, j) => c.classList.toggle("active", j === i));
+          infos.forEach((c, j) => c.classList.toggle("active", j === i));
+        }
+
+        function update() {
+          const scrolled = -outer.getBoundingClientRect().top;
+          const total = outer.offsetHeight - window.innerHeight;
+          const progress = Math.max(0, Math.min(1, scrolled / total));
+          const active = Math.min(n - 1, Math.floor(progress * n));
+          setActive(active);
+        }
+
+        window.addEventListener("scroll", update, { passive: true });
+        update();
+      })();
+
+      /* Footer canvas video-in-text */
+      (function () {
+        const canvas = document.getElementById("logoCanvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("footerVideo");
+        const logo = new Image();
+        logo.src = "assets/urban_bubble_text_logo.png";
+        let ready = false;
+
+        function draw() {
+          requestAnimationFrame(draw);
+          if (!ready || video.readyState < 2) return;
+          const W = canvas.width,
+            H = canvas.height;
+          ctx.clearRect(0, 0, W, H);
+          const vAR = video.videoWidth / video.videoHeight;
+          const cAR = W / H;
+          let sx, sy, sw, sh;
+          if (vAR > cAR) {
+            sh = video.videoHeight;
+            sw = sh * cAR;
+            sx = (video.videoWidth - sw) / 2;
+            sy = 0;
+          } else {
+            sw = video.videoWidth;
+            sh = sw / cAR;
+            sx = 0;
+            sy = (video.videoHeight - sh) / 2;
+          }
+          ctx.drawImage(video, sx, sy, sw, sh, 0, 0, W, H);
+          ctx.globalCompositeOperation = "destination-in";
+          ctx.drawImage(logo, 0, 0, W, H);
+          ctx.globalCompositeOperation = "source-over";
+        }
+
+        logo.onload = () => {
+          canvas.width = logo.naturalWidth;
+          canvas.height = logo.naturalHeight;
+          ready = true;
+          requestAnimationFrame(draw);
+        };
+        if (logo.complete && logo.naturalWidth) {
+          canvas.width = logo.naturalWidth;
+          canvas.height = logo.naturalHeight;
+          ready = true;
+          requestAnimationFrame(draw);
+        }
+        video.play().catch(() => {});
+      })();
+
+      /* FAQ accordion */
+      document.querySelectorAll(".faq-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const body = trigger.nextElementSibling;
+          const isOpen = trigger.classList.contains("open");
+          // Close all
+          document.querySelectorAll(".faq-trigger").forEach((t) => {
+            t.classList.remove("open");
+            t.nextElementSibling.classList.remove("open");
+          });
+          // Open clicked if it wasn't already open
+          if (!isOpen) {
+            trigger.classList.add("open");
+            body.classList.add("open");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
