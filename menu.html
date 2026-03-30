@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Menu — Urban Bubble</title>
+    <link rel="icon" type="image/jpg" href="assets/urban-bubble-logo.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -544,9 +545,44 @@
           grid-template-columns: 1fr 1fr;
         }
       }
+      /* ── Page transitions ── */
+      .curtain {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        background: var(--deep);
+        pointer-events: none;
+        transform: translateY(0); /* covers screen by default — no flash */
+      }
+      .curtain.reveal {
+        animation: curtainReveal 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s
+          forwards;
+      }
+      .curtain.cover {
+        animation: curtainCover 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+      }
+      @keyframes curtainReveal {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-100%);
+        }
+      }
+      @keyframes curtainCover {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- PAGE TRANSITION CURTAIN -->
+    <div class="curtain" id="curtain"></div>
+
     <!-- NAV -->
     <nav class="nav" id="nav">
       <div class="nav-logo">
@@ -866,7 +902,11 @@
             <ul>
               <li>
                 <a href="mailto:info@urbanbubblesd.com"
-                  >info@urbanbubblesd.com</a
+                  ><span
+                    class="__cf_email__"
+                    data-cfemail="b9d0d7dfd6f9cccbdbd8d7dbccdbdbd5dccadd97dad6d4"
+                    >info@urbanbubblesd.com</span
+                  ></a
                 >
               </li>
               <li><a href="tel:18885690660">1.888.569.0660</a></li>
@@ -955,6 +995,10 @@
       </div>
     </footer>
 
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
     <script>
       /* Filter */
       document.querySelectorAll(".filter-item").forEach((item) => {
@@ -1038,6 +1082,36 @@
           requestAnimationFrame(draw);
         }
         video.play().catch(() => {});
+      })();
+
+      /* ── Page transition system ── */
+      (function () {
+        const curtain = document.getElementById("curtain");
+
+        // Curtain already covers screen by default — lift it up
+        curtain.classList.add("reveal");
+
+        document.querySelectorAll("a[href]").forEach((link) => {
+          const href = link.getAttribute("href");
+          if (
+            !href ||
+            href.startsWith("#") ||
+            href.startsWith("mailto") ||
+            href.startsWith("tel") ||
+            href.startsWith("http") ||
+            href.startsWith("//")
+          )
+            return;
+
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            curtain.classList.remove("reveal");
+            curtain.classList.add("cover");
+            setTimeout(() => {
+              window.location.href = href;
+            }, 750);
+          });
+        });
       })();
     </script>
   </body>
